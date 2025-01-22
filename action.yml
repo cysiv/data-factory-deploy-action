@@ -49,12 +49,4 @@ runs:
         template: ${{ inputs.armTemplateFile }}
         parameters: ${{ inputs.armTemplateParametersFile }} factoryName=${{ inputs.dataFactoryName }} ${{ inputs.additionalParameters }}
         
-    - name: Run Post-deployment script
-      run: |
-        ${{ github.action_path }}/PrePostDeploymentScript.ps1 `
-          -armTemplate "${{ inputs.armTemplateFile }}" `
-          -ResourceGroupName "${{ inputs.resourceGroupName }}" `
-          -DataFactoryName '${{ inputs.dataFactoryName }}' `
-          -predeployment $false `
-          -deleteDeployment $true
       shell: pwsh
