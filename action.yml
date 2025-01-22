@@ -48,5 +48,3 @@ runs:
         resourceGroupName: ${{ inputs.resourceGroupName }}
         template: ${{ inputs.armTemplateFile }}
         parameters: ${{ inputs.armTemplateParametersFile }} factoryName=${{ inputs.dataFactoryName }} ${{ inputs.additionalParameters }}
-        
-      shell: pwsh
