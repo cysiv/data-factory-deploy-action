@@ -48,7 +48,6 @@ runs:
         resourceGroupName: ${{ inputs.resourceGroupName }}
         template: ${{ inputs.armTemplateFile }}
         parameters: ${{ inputs.armTemplateParametersFile }} factoryName=${{ inputs.dataFactoryName }} ${{ inputs.additionalParameters }}
-        additionalArguments: '--verbose'
 
     - name: Run Post-deployment script
       run: |
