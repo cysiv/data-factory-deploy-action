@@ -32,15 +32,15 @@ runs:
       run: if('${{ inputs.skipAzModuleInstallation }}' -ne 'true') { Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force }
       shell: pwsh
 
-    #- name: Run Pre-deployment script
-    #  run: |
-    #    ${{ github.action_path }}/PrePostDeploymentScript.ps1 `
-    #      -armTemplate "${{ inputs.armTemplateFile }}" `
-    #      -ResourceGroupName "${{ inputs.resourceGroupName }}" `
-    #      -DataFactoryName "${{ inputs.dataFactoryName }}" `
-    #      -predeployment $true `
-    #      -deleteDeployment $false
-    #  shell: pwsh
+    - name: Run Pre-deployment script
+      run: |
+        ${{ github.action_path }}/PrePostDeploymentScript.ps1 `
+          -armTemplate "${{ inputs.armTemplateFile }}" `
+          -ResourceGroupName "${{ inputs.resourceGroupName }}" `
+          -DataFactoryName "${{ inputs.dataFactoryName }}" `
+          -predeployment $true `
+          -deleteDeployment $false
+      shell: pwsh
 
     - name: Run ARM deploy
       uses: azure/arm-deploy@v1
@@ -48,3 +48,14 @@ runs:
         resourceGroupName: ${{ inputs.resourceGroupName }}
         template: ${{ inputs.armTemplateFile }}
         parameters: ${{ inputs.armTemplateParametersFile }} factoryName=${{ inputs.dataFactoryName }} ${{ inputs.additionalParameters }}
+        additionalArguments: '--verbose'
+
+    - name: Run Post-deployment script
+      run: |
+        ${{ github.action_path }}/PrePostDeploymentScript.ps1 `
+          -armTemplate "${{ inputs.armTemplateFile }}" `
+          -ResourceGroupName "${{ inputs.resourceGroupName }}" `
+          -DataFactoryName '${{ inputs.dataFactoryName }}' `
+          -predeployment $false `
+          -deleteDeployment $true
+      shell: pwsh
