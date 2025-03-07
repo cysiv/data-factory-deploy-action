@@ -39,7 +39,8 @@ runs:
           -ResourceGroupName "${{ inputs.resourceGroupName }}" `
           -DataFactoryName "${{ inputs.dataFactoryName }}" `
           -predeployment $true `
-          -deleteDeployment $false
+          -deleteDeployment $false `
+          -armTemplateParameters "${{ inputs.armTemplateParametersFile }}" `
       shell: pwsh
 
     - name: Run ARM deploy
@@ -56,5 +57,6 @@ runs:
           -ResourceGroupName "${{ inputs.resourceGroupName }}" `
           -DataFactoryName '${{ inputs.dataFactoryName }}' `
           -predeployment $false `
-          -deleteDeployment $true
+          -deleteDeployment $true `
+          -armTemplateParameters "${{ inputs.armTemplateParametersFile }}" `
       shell: pwsh
